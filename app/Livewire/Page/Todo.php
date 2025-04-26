@@ -8,6 +8,7 @@ use App\Models\Task;
 use Illuminate\Contracts\Pagination\Paginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -24,11 +25,13 @@ class Todo extends Component
     /**
      * Task filter
      */
+    #[Url]
     public string $filter = 'all';
 
     /**
      * Task sort
      */
+    #[Url]
     public string $sort = 'created';
 
     /**
@@ -43,7 +46,7 @@ class Todo extends Component
             'is_done' => false
         ]);
 
-        $this->reset();
+        $this->reset('task');
     }
 
     /**
@@ -92,21 +95,17 @@ class Todo extends Component
     {
         $query = Task::query();
 
-        if ($this->sort === 'alphabetical') {
-            $query->orderBy('title');
-        }
+        match ($this->sort) {
+            'created'      => $query->orderByDesc('created_at'),
+            'alphabetical' => $query->orderBy('title'),
+            default        => null
+        };
 
-        if ($this->sort === 'created') {
-            $query->orderByDesc('created_at');
-        }
-
-        if ($this->filter === 'active') {
-            $query->where('is_done', false);
-        }
-
-        if ($this->filter === 'completed') {
-            $query->where('is_done', true);
-        }
+        match ($this->filter) {
+            'active'    => $query->active(),
+            'completed' => $query->completed(),
+            default     => null
+        };
 
         return $query->simplePaginate(5);
     }
