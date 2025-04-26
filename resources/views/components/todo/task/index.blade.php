@@ -1,8 +1,9 @@
 @props([
-    'task'
+    'task',
+    'key'
 ])
 
-<li class="flex justify-between items-center bg-gray-50 p-4 rounded-xl shadow-xs font-medium">
+<li wire:key="task-{{ $key }}" class="flex justify-between items-center bg-gray-50 p-4 rounded-xl shadow-xs font-medium">
     <span class="text-gray-800">{{ $task->title }}</span>
     <div class="flex items-center space-x-2">
         <button

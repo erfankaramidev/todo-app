@@ -41,7 +41,7 @@
     <!-- Task list -->
     <ul class="space-y-3 mb-4">
         @forelse ($this->tasks as $task)
-            <x-todo.task wire:key="task-{{ $task->id }}" :task="$task" />
+            <x-todo.task :key="$task->id" :task="$task" />
         @empty
             <p class="text-gray-600 text-center">No tasks found.</p>
         @endforelse
