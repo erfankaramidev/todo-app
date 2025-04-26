@@ -39,7 +39,7 @@
     </div>
 
     <!-- Task list -->
-    <ul class="space-y-3 mb-4">
+    <ul wire:loading.class="opacity-50" wire:target="add, filterStatus, sort" class="space-y-3 mb-4">
         @forelse ($this->tasks as $task)
             <x-todo.task :key="$task->id" :task="$task" />
         @empty
