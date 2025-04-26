@@ -91,13 +91,13 @@ class Todo extends Component
     public function tasks(): Paginator
     {
         $query = Task::query();
-        
+
         if ($this->sort === 'alphabetical') {
             $query->orderBy('title');
         }
 
         if ($this->sort === 'created') {
-            $query->orderByDesc('created');
+            $query->orderByDesc('created_at');
         }
 
         if ($this->filter === 'active') {
