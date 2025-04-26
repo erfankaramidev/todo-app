@@ -1,3 +1,8 @@
+@php
+    /**
+     * @var \App\Livewire\Page\Todo $this
+     **/
+@endphp
 <!-- Box -->
 <div class="w-full max-w-2xl bg-white shadow-md rounded-2xl p-6">
     <!-- Header -->
@@ -10,10 +15,17 @@
     </header>
 
     <!-- New task input -->
-    <div class="flex mb-4">
-        <input class="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:border-indigo-400 outline-none"
-            type="text" name="task" placeholder="Add a new task...">
-        <button class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-r-xl cursor-pointer">Add</button>
+    <div class="mb-4">
+        <div class="flex">
+            <input wire:model="task"
+                class="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:border-indigo-400 outline-none"
+                type="text" name="task" placeholder="Add a new task...">
+            <button wire:click="add"
+                class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-r-xl cursor-pointer">Add</button>
+        </div>
+        @error('task')
+            <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+        @enderror
     </div>
 
     <!-- Filters -->
@@ -25,14 +37,19 @@
 
     <!-- Task list -->
     <ul class="space-y-3 mb-4">
-        <li class="flex justify-between items-center bg-gray-50 p-4 rounded-xl shadow-xs font-medium">
-            <span class="text-gray-800">Task One</span>
-            <button class="bg-green-100 hover:bg-green-200 text-green-700 rounded-lg py-1 px-3">Done</button>
-        </li>
-        <li class="flex justify-between items-center bg-gray-50 p-4 rounded-xl shadow-xs font-medium">
-            <span class="text-gray-400 font-normal line-through">Task Two</span>
-            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg py-1 px-3">Undo</button>
-        </li>
+        @foreach ($this->tasks as $task)
+            <li wire:key="{{ $task->id }}"
+                class="flex justify-between items-center bg-gray-50 p-4 rounded-xl shadow-xs font-medium">
+                <span class="text-gray-800">{{ $task->title }}</span>
+                <div class="flex items-center space-x-2">
+                    <button wire:click="toggle('{{ $task->id }}')"
+                        class="cursor-pointer rounded-lg py-1 px-3 {{ $task->is_done ? 'bg-gray-200 hover:bg-gray-300 text-gray-700' : 'bg-green-100 hover:bg-green-200 text-green-700'}}">{{ $task->is_done ? 'Undo' : 'Done' }}</button>
+                    <button class="p-1 rounded-full text-xs cursor-pointer">
+                        🗑️
+                    </button>
+                </div>
+            </li>
+        @endforeach
     </ul>
 
     <!-- Pagination -->
