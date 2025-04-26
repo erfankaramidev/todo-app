@@ -33,9 +33,9 @@
 
     <!-- Filters -->
     <div class="flex justify-center space-x-2 mb-4">
-        <button class="px-3 py-1 rounded-full cursor-pointer bg-indigo-100 text-indigo-700 font-medium">All</button>
-        <button class="px-3 py-1 rounded-full cursor-pointer bg-gray-100 text-gray-700">Active</button>
-        <button class="px-3 py-1 rounded-full cursor-pointer bg-gray-100 text-gray-700">Completed</button>
+        <button wire:click="filterStatus('all')" class="px-3 py-1 rounded-full cursor-pointer {{ $this->filter == 'all' ? 'bg-indigo-100 text-indigo-700 font-medium' : 'bg-gray-100 text-gray-700' }}">All</button>
+        <button wire:click="filterStatus('active')" class="px-3 py-1 rounded-full cursor-pointer {{ $this->filter == 'active' ? 'bg-indigo-100 text-indigo-700 font-medium' : 'bg-gray-100 text-gray-700' }}">Active</button>
+        <button wire:click="filterStatus('completed')" class="px-3 py-1 rounded-full cursor-pointer {{ $this->filter == 'completed' ? 'bg-indigo-100 text-indigo-700 font-medium' : 'bg-gray-100 text-gray-700' }}">Completed</button>
     </div>
 
     <!-- Task list -->
