@@ -20,6 +20,9 @@ class Todo extends Component
     #[Rule('required')]
     public string $task;
 
+    /**
+     * Add a new task
+     */
     public function add()
     {
         $this->validate();
@@ -32,6 +35,9 @@ class Todo extends Component
         $this->reset();
     }
 
+    /**
+     * Toggle tasks status
+     */
     public function toggle(int $id)
     {
         $task = Task::find($id);
@@ -39,6 +45,17 @@ class Todo extends Component
         $task->save();
     }
 
+    /**
+     * Delete a task
+     */
+    public function delete(int $id) 
+    {
+        Task::find($id)->delete();
+    }
+
+    /**
+     * Get all tasks
+     */
     #[Computed]
     public function tasks()
     {
