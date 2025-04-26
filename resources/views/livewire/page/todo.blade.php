@@ -8,7 +8,7 @@
     <!-- Header -->
     <header class="flex items-center justify-between mb-4">
         <h1 class="text-3xl font-bold text-gray-900">To-do list</h1>
-        <select wire:model.live="sort" class="border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400">
+        <select wire:loading.class="opacity-50" wire.loading.attr="disabled" wire:model.live="sort" class="border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400">
             <option value="created">Date created</option>
             <option value="alphabetical">A-Z</option>
         </select>
@@ -21,7 +21,7 @@
                 <input wire:model="task"
                     class="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:border-indigo-400 outline-none"
                     type="text" name="task" placeholder="Add a new task...">
-                <button wire:click.prevent="add" type="submit"
+                <button wire:click.prevent="add" wire:loading.class="opacity-50 cursor-wait" wire:loading.attr="disabled" type="submit"
                     class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-r-xl cursor-pointer">Add</button>
 
             </form>
