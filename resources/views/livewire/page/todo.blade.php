@@ -8,7 +8,7 @@
     <!-- Header -->
     <header class="flex items-center justify-between mb-4">
         <h1 class="text-3xl font-bold text-gray-900">To-do list</h1>
-        <select id="sort" class="border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400">
+        <select wire:model.live="sort" class="border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400">
             <option value="created">Date created</option>
             <option value="alphabetical">A-Z</option>
         </select>
@@ -33,26 +33,18 @@
 
     <!-- Filters -->
     <div class="flex justify-center space-x-2 mb-4">
-        <button wire:click="filterStatus('all')" class="px-3 py-1 rounded-full cursor-pointer {{ $this->filter == 'all' ? 'bg-indigo-100 text-indigo-700 font-medium' : 'bg-gray-100 text-gray-700' }}">All</button>
-        <button wire:click="filterStatus('active')" class="px-3 py-1 rounded-full cursor-pointer {{ $this->filter == 'active' ? 'bg-indigo-100 text-indigo-700 font-medium' : 'bg-gray-100 text-gray-700' }}">Active</button>
-        <button wire:click="filterStatus('completed')" class="px-3 py-1 rounded-full cursor-pointer {{ $this->filter == 'completed' ? 'bg-indigo-100 text-indigo-700 font-medium' : 'bg-gray-100 text-gray-700' }}">Completed</button>
+        <x-todo.filter.button label="All" key="all" />
+        <x-todo.filter.button label="Active" key="active" />
+        <x-todo.filter.button label="Completed" key="completed" />
     </div>
 
     <!-- Task list -->
     <ul class="space-y-3 mb-4">
-        @foreach ($this->tasks as $task)
-            <li wire:key="{{ $task->id }}"
-                class="flex justify-between items-center bg-gray-50 p-4 rounded-xl shadow-xs font-medium">
-                <span class="text-gray-800">{{ $task->title }}</span>
-                <div class="flex items-center space-x-2">
-                    <button wire:click="toggle('{{ $task->id }}')"
-                        class="cursor-pointer rounded-lg py-1 px-3 {{ $task->is_done ? 'bg-gray-200 hover:bg-gray-300 text-gray-700' : 'bg-green-100 hover:bg-green-200 text-green-700'}}">{{ $task->is_done ? 'Undo' : 'Done' }}</button>
-                    <button wire:click="delete('{{ $task->id }}')" class="p-1 rounded-full text-xs cursor-pointer">
-                        🗑️
-                    </button>
-                </div>
-            </li>
-        @endforeach
+        @forelse ($this->tasks as $task)
+            <x-todo.task wire:key="task-{{ $task->id }}" :task="$task" />
+        @empty
+            <p class="text-gray-600 text-center">No tasks found.</p>
+        @endforelse
     </ul>
 
     {{-- Pagination --}}

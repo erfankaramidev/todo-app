@@ -27,6 +27,11 @@ class Todo extends Component
     public string $filter = 'all';
 
     /**
+     * Task sort
+     */
+    public string $sort = 'created';
+
+    /**
      * Add a new task
      */
     public function add(): void
@@ -85,7 +90,15 @@ class Todo extends Component
     #[Computed]
     public function tasks(): Paginator
     {
-        $query = Task::query()->orderByDesc('created_at');
+        $query = Task::query();
+        
+        if ($this->sort === 'alphabetical') {
+            $query->orderBy('title');
+        }
+
+        if ($this->sort === 'created') {
+            $query->orderByDesc('created');
+        }
 
         if ($this->filter === 'active') {
             $query->where('is_done', false);
