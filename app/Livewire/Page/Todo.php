@@ -8,9 +8,12 @@ use App\Models\Task;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Todo extends Component
 {
+    use WithPagination;
+    
     /**
      * Task
      */
@@ -39,6 +42,6 @@ class Todo extends Component
     #[Computed]
     public function tasks()
     {
-        return Task::all();
+        return Task::simplePaginate(5);
     }
 }

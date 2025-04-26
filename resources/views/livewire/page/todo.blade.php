@@ -16,12 +16,15 @@
 
     <!-- New task input -->
     <div class="mb-4">
-        <div class="flex">
-            <input wire:model="task"
-                class="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:border-indigo-400 outline-none"
-                type="text" name="task" placeholder="Add a new task...">
-            <button wire:click="add"
-                class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-r-xl cursor-pointer">Add</button>
+        <div>
+            <form class="flex">
+                <input wire:model="task"
+                    class="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:border-indigo-400 outline-none"
+                    type="text" name="task" placeholder="Add a new task...">
+                <button wire:click.prevent="add" type="submit"
+                    class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-r-xl cursor-pointer">Add</button>
+
+            </form>
         </div>
         @error('task')
             <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
@@ -52,10 +55,6 @@
         @endforeach
     </ul>
 
-    <!-- Pagination -->
-    <div class="flex justify-center space-x-2">
-        <button disabled
-            class="px-3 py-1 rounded bg-gray-200 disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-gray-300 text-gray-700">Previous</button>
-        <button class="px-3 py-1 rounded bg-gray-200 text-gray-700 cursor-pointer">Next</button>
-    </div>
+    {{-- Pagination --}}
+    {{ $this->tasks->links() }}
 </div>
