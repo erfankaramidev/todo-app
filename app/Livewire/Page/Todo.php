@@ -41,7 +41,8 @@ class Todo extends Component
 
         Task::create([
             'title' => $this->task,
-            'is_done' => false
+            'is_done' => false,
+            'session_id' => session()->getId()
         ]);
 
         $this->reset('task');
@@ -91,7 +92,8 @@ class Todo extends Component
     #[Computed]
     public function tasks(): Paginator
     {
-        $query = Task::query();
+        $query = Task::query()
+            ->where('session_id', session()->getId());
 
         match ($this->sort) {
             'created'      => $query->orderByDesc('created_at'),
