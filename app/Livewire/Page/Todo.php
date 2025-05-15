@@ -8,7 +8,6 @@ use App\Models\Task;
 use Illuminate\Contracts\Pagination\Paginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Rule;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
