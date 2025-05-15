@@ -25,13 +25,11 @@ class Todo extends Component
     /**
      * Task filter
      */
-    #[Url]
     public string $filter = 'all';
 
     /**
      * Task sort
      */
-    #[Url]
     public string $sort = 'created';
 
     /**
